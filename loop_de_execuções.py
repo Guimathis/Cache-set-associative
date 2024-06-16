@@ -1,7 +1,7 @@
 from main import *
 
 # Importação do arquivo que contem as funções de manipulação de arquivos
-from processarArquivos import *
+from processamento_arquivos import *
 
 # Códigos de cores para alterar cores no terminal
 RESET = "\033[0m"

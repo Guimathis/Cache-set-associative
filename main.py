@@ -3,7 +3,7 @@ import numpy as np
 
 
 from cache import *
-from memoriaPrincipal import *
+from memoria_principal import *
 
 # Váriavel global para guardar o tamanho da palavra, que é especificado no trabalho ser 4
 tam_palavra = 4
