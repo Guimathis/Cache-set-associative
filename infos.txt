@@ -1,0 +1,5 @@
+#tamanho da memoria(max: 256kb), n palavras p/ bloco(2, 4, 8)
+8, 4
+#tamanho cache(max: 32kb), n linhas p/ conjunto(min: 2, max: n linha/2)
+4, 4
+
