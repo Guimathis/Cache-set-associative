@@ -1,4 +1,4 @@
-from main import *
+from service import *
 
 # Importação do arquivo que contem as funções de manipulação de arquivos
 from processamento_arquivos import *
@@ -41,13 +41,15 @@ def loop_opções_execução(arq_infos=None):
             #   usar esta opção durante a execução irá criar uma nova memória e resetar a cache
             case 'R' | 'r':
                 arq_infos = ler_nome_arquivo()
-                print(arq_infos)
+
                 infos_mp_cache = ler_arquivo_infos_cc_mp(arq_infos)
                 if infos_mp_cache is not None:
                     dados_mp_cache = declarar_mp_cache(infos_mp_cache)
                     memoria_principal = dados_mp_cache['memoriaPrincipal']
                     cache = dados_mp_cache['cache']
-                    print('Arquivo lido com sucesso!\n')
+                    print('Arquivo lido com sucesso!')
+                    print(cache.__str__())
+                    print(memoria_principal.__str__())
                 else: arq_infos = None
 
             # Opção 'W' imprime as informações da mp e cache como tag e tamanho do endereço,
@@ -67,7 +69,7 @@ def loop_opções_execução(arq_infos=None):
                 if arq_infos is None:
                     print('\nLeia um arquivo de informações para poder acessar um endereço.\n')
                 else:
-                    endereço_bin = input(f'     Digite um endereço binário de {memoria_principal.tamanho_do_endereco} bits: ')
+                    endereço_bin = input(f'   Digite um endereço binário de {memoria_principal.tamanho_do_endereco} bits: ')
                     if len(endereço_bin) != memoria_principal.tamanho_do_endereco or not endereço_bin.isdigit():
                         print('Endereço inválido, tente novamente:\n')
                     else:

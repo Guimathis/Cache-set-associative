@@ -1,12 +1,13 @@
 # Biblioteca para lidar com vetores e numeros aleatórios, **NECESSITA pip install NumPy**
 import numpy as np
 
-import main
-from main import *
+import service
+from service import *
 
 # Códigos de cores para alterar cores no terminal
 RESET = "\033[0m"
 BLUE = "\033[34m"
+
 
 # Classe cache com atributos para guardar as informações da cache em um objeto.
 class Cache:
@@ -19,7 +20,8 @@ class Cache:
         self.tag = tag
         self.falha = 0
         self.acerto = 0
-        self.cache = [[{'tag': None, 'bloco': None, 'cont': 0} for _ in range(self.linhasPorConjunto)] for _ in range(self.quantidadeConjuntos)]
+        self.cache = [[{'tag': None, 'bloco': None, 'cont': 0} for _ in range(self.linhasPorConjunto)] for _ in
+                      range(self.quantidadeConjuntos)]
 
     # Imprime a cache por completo, separada pelo número dos conjuntos
     def imprimir_cache(self):
@@ -35,7 +37,6 @@ class Cache:
                 f"{BLUE}\nQuantidade de linhas da cache: {RESET}{self.quantidadeLinhas} "
                 f"{BLUE}\nBits para d: {RESET}{self.d} "
                 f"{BLUE}\nBits para tag: {RESET}{self.tag}\n")
-
 
     # Imprime na tela o conjunto acessado, junto com o anterior e o posterior, se existir
     def imprimir_conjuntos(self, indice_cache):
@@ -82,7 +83,8 @@ class Cache:
     def buscar_na_memoria(self, memoria, endereço, linha):
         indices = endereço['s'] * memoria.palavras_por_bloco
         bloco = memoria.memoriaPrincipal[indices:indices + memoria.palavras_por_bloco]
-        self.cache[endereço['d']][linha]['bloco'] = list(bloco)
+
+        self.cache[endereço['d']][linha]['bloco'] = [int(valor) for valor in bloco]
         self.cache[endereço['d']][linha]['tag'] = endereço['tag']
         self.cache[endereço['d']][linha]['cont'] += 1
 
@@ -91,7 +93,7 @@ class Cache:
     # analisa o retorno da função acessar_cache() e faz atribuições, alterações e incrementos se necessário,
     # também chama o LFU se o conjunto estiver cheio
     def acessar_endereço(self, endereço_bin, memoria_principal):
-        endereço = main.processa_endereco(endereço_bin, memoria_principal, self)
+        endereço = service.processa_endereco(endereço_bin, memoria_principal, self)
         status_pos = self.acessar_cache(endereço)
 
         # se status_pos[0] = 0 significa que existe linha vazia na cache,

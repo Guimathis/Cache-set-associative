@@ -11,6 +11,7 @@ def ler_arquivo_infos_cc_mp(nome_arq):
         dados_mp_cache = {'tamMemoria': int(infos[1].split(', ')[0]), 'palpBloco': int(infos[1].split(', ')[1]),
                           'tamCache': int(infos[3].split(', ')[0]), 'linpConjunto': int(infos[3].split(', ')[1])}
         f.close()
+
         return dados_mp_cache
     except FileNotFoundError:
         print('Arquivo não encontrado, tente novamente: \n')
