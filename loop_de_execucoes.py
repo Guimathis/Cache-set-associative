@@ -13,7 +13,6 @@ BLUE = "\033[34m"
 #   se o arquivo não for nulo chama função para ler os dados do arquivo de entrada e declarar a memória principal e a cache
 #   se o nome do arquivo não for inserido, inicia-se o loop, mas para usar qualquer opção
 #   é preciso ler um arquivo de informações.
-
 # Inicia o loop de execuções para apresentar as opções
 def loop_opções_execução(arq_infos=None):
     if arq_infos is not None:
@@ -23,8 +22,9 @@ def loop_opções_execução(arq_infos=None):
             memoria_principal = dados_mp_cache['memoriaPrincipal']
             cache = dados_mp_cache['cache']
             print('Arquivo lido com sucesso!')
-            print(cache.__str__())
             print(memoria_principal.__str__())
+            print(cache.__str__())
+
     sair_loop = False
     while not sair_loop:
         print('Opções:')
@@ -48,18 +48,20 @@ def loop_opções_execução(arq_infos=None):
                     memoria_principal = dados_mp_cache['memoriaPrincipal']
                     cache = dados_mp_cache['cache']
                     print('Arquivo lido com sucesso!')
-                    print(cache.__str__())
                     print(memoria_principal.__str__())
-                else: arq_infos = None
+                    print(cache.__str__())
+
+                else:
+                    arq_infos = None
 
             # Opção 'W' imprime as informações da mp e cache como tag e tamanho do endereço,
             #   e imprime por completo a mp e cache própriamente.
             case 'W' | 'w':
                 if arq_infos is not None:
-                    print(str(cache))
-                    print(str(memoria_principal))
-                    cache.imprimir_cache()
                     memoria_principal.imprimir_memoria()
+                    cache.imprimir_cache()
+                    print(str(memoria_principal))
+                    print(str(cache))
                 else:
                     print('\nLeia um arquivo de informações para poder imprimir.\n')
 
@@ -69,21 +71,23 @@ def loop_opções_execução(arq_infos=None):
                 if arq_infos is None:
                     print('\nLeia um arquivo de informações para poder acessar um endereço.\n')
                 else:
-                    endereço_bin = input(f'   Digite um endereço binário de {memoria_principal.tamanho_do_endereco} bits: ')
-                    if len(endereço_bin) != memoria_principal.tamanho_do_endereco or not endereço_bin.isdigit():
-                        print('Endereço inválido, tente novamente:\n')
+                    endereco_decimal = input_decimal(memoria_principal.quantidade_de_linhas)
+                    if endereco_decimal is None:
+                        pass
                     else:
-                        print('------------------------------------------------------------------------------------------------------------------------------')
-                        print(f'Acessando o endereço de memória {endereço_bin}:')
-                        cache.acessar_endereço(endereço_bin, memoria_principal)
-                        print('------------------------------------------------------------------------------------------------------------------------------')
+                        print('-' * 150)
+                        print(f'Acessando o endereço de memória {endereco_decimal}:')
+                        cache.acessar_endereço_decimal(endereco_decimal, memoria_principal,
+                                                       memoria_principal.tamanho_do_endereco)
+                        print('-' * 150)
+
             # Opção 'A' permite a leitura de um arquivo de endereços da memória principal
             case 'A' | 'a':
                 arq_endereços = ler_nome_arquivo()
                 if arq_infos is None:
                     print('\nLeia um arquivo de informações para poder acessar um endereço.\n')
                 else:
-                    ler_arquivo_endereços(arq_endereços, memoria_principal, cache)
+                    ler_arquivo_endereços_decimais(arq_endereços, memoria_principal, cache)
 
             # Opção 'T' Permite imprimir a taxa de falha/acerto na cache
             case 'T' | 't':
@@ -98,4 +102,3 @@ def loop_opções_execução(arq_infos=None):
 
 if __name__ == '__main__':
     loop_opções_execução(abrir_arquivo_execucao())
-    # loop_opções_execução()

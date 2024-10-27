@@ -20,15 +20,16 @@ class MemoriaPrincipal:
         self.tamanho_do_endereco = tamanho_endereco
         self.memoriaPrincipal = np.random.randint(100, 99999 + 1, self.quantidade_de_linhas)
 
+
     def __str__(self):
-        return (f"Informações da Memoria Principal: "
+        return (f"\nInformações da Memoria Principal: "
                 f"{BLUE}\nTamanho da memória(kb): {RESET}{self.tamanho} "
                 f"{BLUE}\nPalavras por bloco: {RESET}{self.palavras_por_bloco} "
                 f"{BLUE}\nQuantidade de linhas: {RESET}{self.quantidade_de_linhas} "
                 f"{BLUE}\nQuantidade de blocos: {RESET}{self.quantidade_de_blocos} "
                 f"{BLUE}\nBits para word: {RESET}{self.w} "
                 f"{BLUE}\nBits para s: {RESET}{self.s} "
-                f"{BLUE}\nTamanho do endereço: {RESET}{self.tamanho_do_endereco} \n")
+                f"{BLUE}\nTamanho do endereço: {RESET}{self.tamanho_do_endereco} ")
 
     # imprime a memória principal na tela
     def imprimir_memoria(self):
@@ -38,3 +39,4 @@ class MemoriaPrincipal:
             blocoFim = blocoInicio + self.palavras_por_bloco
             bloco = self.memoriaPrincipal[blocoInicio:blocoFim]
             print(f"Bloco {i}: {bloco}")
+

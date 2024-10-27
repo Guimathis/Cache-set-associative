@@ -17,6 +17,7 @@ RED = "\033[31m"
 # faz alguns cálculos e atribuições e cria os objetos memória principal e cache
 def declarar_mp_cache(infos_mp_cache):
     global tam_palavra
+
     # DADOS MEMÓRIA PRINCIPAL
     numero_de_linhas_mp = int((infos_mp_cache['tamMemoria'] * 1024) / tam_palavra)
     numero_de_blocos_mp = int(numero_de_linhas_mp / infos_mp_cache['palpBloco'])
@@ -46,21 +47,8 @@ def declarar_mp_cache(infos_mp_cache):
     return informações_mp_cache
 
 
-# Função para separar o endereço recebido em tag, s, d e w
-# através da função strip, divide o endereço em 1 caractere por posição,
-# onde o [valor_inicial:valor_final] define as posições que serão atribuidas as respesctivas váriaveis do dicionário
-# e o int(valor, base) converte os valores de binário para decimal
-def processa_endereco(endereco_bin, mp, cache):
-    infos_endereço = {
-        'linha_mp': int(endereco_bin, 2),
-        'tag': endereco_bin.strip()[:cache.tag],
-        's': int(endereco_bin.strip()[:mp.s], 2),
-        'd': int(endereco_bin.strip()[cache.tag:mp.s], 2),
-        'w': int(endereco_bin.strip()[mp.s:], 2),
-    }
-    return infos_endereço
-
-
+# Funcção que recebe como parametro a quantidade de acertos e de erros,
+# calcula e imprime a taxa de acerto/falha
 def taxa_acertos_e_erros(acerto, falha):
     #Se if == verdadeiro imprimi que não houve acessos à cache.
     if acerto + falha == 0:
@@ -70,7 +58,7 @@ def taxa_acertos_e_erros(acerto, falha):
     taxa_acerto = (acerto / (acerto + falha)) * 100
     taxa_erro = (falha / (acerto + falha)) * 100
 
-    print(f'Taxa de acerto: {taxa_acerto:.2f}%')
+    print(f'\nTaxa de acerto: {taxa_acerto:.2f}%')
     print(f'Taxa de erro: {taxa_erro:.2f}%\n')
 
 

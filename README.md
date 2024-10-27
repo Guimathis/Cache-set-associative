@@ -15,6 +15,7 @@ O projeto é composto pelos seguintes arquivos e diretórios:
 - `cache.py`: Implementação da memória cache.
 - `memoria_principal.py`: Implementação da memória principal.
 - `processar_arquivos.py`: Implementação de funções que lidam com arquivos de dados sobre a memória cache e MP.
+- `leitura_decimais.py`: Implementação de funções que lidam com a leitura de numeros decimais e conversões para binário.
 - `infos.txt`: Arquivo com as informações sobre memória principal e memória cache. 
    Possui as informações necessárias para a instanciação da mp e cache(siga as instruções dentro do arquivo).
 - `enderecos.txt`: Arquivo para se preenchido com endereços, para simular uma cache cheia e colocar o algoritmo
@@ -24,15 +25,15 @@ O projeto é composto pelos seguintes arquivos e diretórios:
 
 Para executar o projeto, siga os passos abaixo:
 
-1. Baixe todos os arquivos e diretórios do repositório como um arquivo .zip.
-2. Extraia o conteúdo do arquivo .zip em um diretório de sua preferência.
-3. Abra o diretório extraído como um projeto no PyCharm.
-4. Configure um interpretador Python compatível com o projeto (recomenda-se usar uma versão recente do Python 3).
-5. Execute a partir na main em `loop_de_execuções.py` para iniciar a simulação.
+
+ - Configure um interpretador Python compatível com o projeto (recomenda-se usar uma versão recente do Python 3).
+ - Execute a partir na main em `loop_de_execuções.py` para iniciar a simulação.
 
 ## Observações
 
   - Necessita da instalação da biblioteca NumPy(pip install numpy).
+  - Arquivo infos e enderecos ja estão preenchidos valores para execução e teste do simulador, 
+    mas podem ser alterados para quaisquer valores dentro dos limites de tamanho
 
 
 

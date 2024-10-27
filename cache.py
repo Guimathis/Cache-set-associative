@@ -1,8 +1,6 @@
-# Biblioteca para lidar com vetores e numeros aleatórios, **NECESSITA pip install NumPy**
-import numpy as np
-
 import service
 from service import *
+from leitura_decimal import *
 
 # Códigos de cores para alterar cores no terminal
 RESET = "\033[0m"
@@ -83,26 +81,24 @@ class Cache:
     def buscar_na_memoria(self, memoria, endereço, linha):
         indices = endereço['s'] * memoria.palavras_por_bloco
         bloco = memoria.memoriaPrincipal[indices:indices + memoria.palavras_por_bloco]
-
         self.cache[endereço['d']][linha]['bloco'] = [int(valor) for valor in bloco]
         self.cache[endereço['d']][linha]['tag'] = endereço['tag']
         self.cache[endereço['d']][linha]['cont'] += 1
 
-    # Função que recebe o endereço binário, processa e guarda num dicionário a linha da memória, tag, s, d e w
+    # Função que recebe o endereço decimal, processa e guarda num dicionário a linha da memória, tag, s, d e w
     # usa a função acessar_cache() para saber se o ocorreu falha ou acerto e se é necessário fazer substituição
     # analisa o retorno da função acessar_cache() e faz atribuições, alterações e incrementos se necessário,
     # também chama o LFU se o conjunto estiver cheio
-    def acessar_endereço(self, endereço_bin, memoria_principal):
-        endereço = service.processa_endereco(endereço_bin, memoria_principal, self)
+    def acessar_endereço_decimal(self, endereço_decimal, memoria_principal, tamanho_endereço):
+        endereço = processa_decimal(endereço_decimal, memoria_principal, tamanho_endereço, self)
         status_pos = self.acessar_cache(endereço)
-
         # se status_pos[0] = 0 significa que existe linha vazia na cache,
         # chama a função para buscar o bloco na memória e alocalo na posição vazia do conjunto salva em status_pos[1],
         # falha++
         if status_pos[0] == 0:
             self.falha += 1
             print(f'\nO endereço acessado não está na cache.\n')
-            print(f'Alocando o bloco do endereço {endereço_bin} na cache:')
+            print(f'Alocando o bloco do endereço {endereço_decimal} na cache:')
             self.buscar_na_memoria(memoria_principal, endereço, status_pos[1])
             print(f'Cache resultante:')
             self.imprimir_conjuntos(self.get_indice(endereço['s']))
@@ -127,12 +123,10 @@ class Cache:
         indice_cache = self.get_indice(endereco['s'])
         lfu_index = 0
         cont_min = float('inf')
-
         for i, conjunto in enumerate(self.cache[indice_cache]):
             if conjunto['cont'] < cont_min:
                 cont_min = conjunto['cont']
                 lfu_index = i
-
         print(f'Substituindo a linha {lfu_index} do conjunto {indice_cache} (usada {cont_min} vezes)')
         # Busca o bloco na memória e substitui na cache
         self.buscar_na_memoria(memoria_principal, endereco, lfu_index)
